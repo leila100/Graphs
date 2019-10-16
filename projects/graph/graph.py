@@ -3,6 +3,12 @@ Simple graph implementation
 """
 from util import Stack, Queue  # These may come in handy
 
+class VertexNotFound(Exception):
+    def __init__(self, message):
+        self.message = message
+    def __str__(self):
+        return repr(self.message)
+
 class Graph:
     """Represent a graph as a dictionary of vertices mapping labels to edges."""
     def __init__(self):
@@ -16,12 +22,8 @@ class Graph:
         """
         Add a directed edge to the graph.
         """
-        if v1 not in self.vertices:
-            print("Sorry the vertex {} doesn't exist").format(v1)
-            return
-        if v2 not in self.vertices:
-            print("Sorry the vertex {} doesn't exist").format(v2)
-            return
+        if v1 not in self.vertices or v2 not in self.vertices:
+            raise VertexNotFound("Sorry, the vertex doesn't exist")
         self.vertices[v1].add(v2)
     def bft(self, starting_vertex):
         """
@@ -81,7 +83,7 @@ if __name__ == '__main__':
     graph.add_edge(3, 5)
     graph.add_edge(2, 3)
     graph.add_edge(4, 6)
-    graph.add_edge(4, 8)
+    # graph.add_edge(4, 8)
 
     '''
     Should print:
