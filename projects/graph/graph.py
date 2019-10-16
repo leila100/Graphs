@@ -16,6 +16,12 @@ class Graph:
         """
         Add a directed edge to the graph.
         """
+        if v1 not in self.vertices:
+            print("Sorry the vertex {} doesn't exist").format(v1)
+            return
+        if v2 not in self.vertices:
+            print("Sorry the vertex {} doesn't exist").format(v2)
+            return
         self.vertices[v1].add(v2)
     def bft(self, starting_vertex):
         """
@@ -75,6 +81,7 @@ if __name__ == '__main__':
     graph.add_edge(3, 5)
     graph.add_edge(2, 3)
     graph.add_edge(4, 6)
+    graph.add_edge(4, 8)
 
     '''
     Should print:
