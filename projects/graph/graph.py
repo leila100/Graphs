@@ -39,20 +39,21 @@ class Graph:
         """
         if starting_vertex not in self.vertices:
             raise VertexNotFound("Sorry, the vertex doesn't exist")
-        answer = ""
+        answer = []
         visited = set()
         q = Queue()
         q.enqueue(starting_vertex)
         while q.size():
             current_vertex = q.dequeue()
             if current_vertex not in visited:
-                answer += " " + str(current_vertex)
+                answer.append(str(current_vertex))
                 visited.add(current_vertex)
                 neighbors = self.getNeighbors(current_vertex)
                 if neighbors and len(neighbors):
                     for neighbor in neighbors:
                         q.enqueue(neighbor)
-        print("BFT: " + answer)
+        print("BFT: " + " ".join(answer))
+        return answer
 
     def dft(self, starting_vertex):
         """
@@ -62,19 +63,20 @@ class Graph:
         if starting_vertex not in self.vertices:
             raise VertexNotFound("Sorry, the vertex doesn't exist")
         visited = set()
-        answer = ""
+        answer = []
         st = Stack()
         st.push(starting_vertex)
         while st.size():
             current_vertex = st.pop()
             if current_vertex not in visited:
-                answer += " " + str(current_vertex)
+                answer.append(str(current_vertex))
                 visited.add(current_vertex)
                 neighbors = self.getNeighbors(current_vertex)
                 if neighbors and len(neighbors):
                     for neighbor in neighbors:
                         st.push(neighbor)
-        print("DFT: " + answer)
+        print("DFT: " + " ".join(answer))
+        return answer
 
     def dft_recursive(self, starting_vertex):
         """
@@ -97,6 +99,7 @@ class Graph:
 
         dft(starting_vertex, visited, result)
         print("Recursive DFT: " + " ".join(result))
+        return result
 
     def bfs(self, starting_vertex, destination_vertex):
         """
@@ -104,14 +107,32 @@ class Graph:
         starting_vertex to destination_vertex in
         breath-first order.
         """
-        pass  # TODO
+        pass
+
     def dfs(self, starting_vertex, destination_vertex):
         """
         Return a list containing a path from
         starting_vertex to destination_vertex in
         depth-first order.
         """
-        pass  # TODO
+        if starting_vertex not in self.vertices or destination_vertex not in self.vertices:
+            raise VertexNotFound("Sorry, the vertex doesn't exist")
+        visited = set()
+        answer = []
+        st = Stack()
+        st.push(starting_vertex)
+        while st.size():
+            current_vertex = st.pop()
+            if current_vertex not in visited:
+                answer.append(current_vertex)
+                visited.add(current_vertex)
+                if current_vertex == destination_vertex:
+                    return answer
+                neighbors = self.getNeighbors(current_vertex)
+                if neighbors and len(neighbors):
+                    for neighbor in neighbors:
+                        st.push(neighbor)
+        
 
 
 
