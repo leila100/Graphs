@@ -37,6 +37,8 @@ class Graph:
         Print each vertex in breadth-first order
         beginning from starting_vertex.
         """
+        if starting_vertex not in self.vertices:
+            raise VertexNotFound("Sorry, the vertex doesn't exist")
         visited = set()
         q = Queue()
         q.enqueue(starting_vertex)
@@ -136,6 +138,7 @@ if __name__ == '__main__':
         1, 2, 4, 3, 7, 5, 6
     '''
     graph.bft(1)
+    # graph.bft(9)
 
     '''
     Valid DFT recursive paths:
