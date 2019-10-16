@@ -39,18 +39,19 @@ class Graph:
         """
         if starting_vertex not in self.vertices:
             raise VertexNotFound("Sorry, the vertex doesn't exist")
+        answer = ""
         visited = set()
         q = Queue()
         q.enqueue(starting_vertex)
         while q.size():
             current_vertex = q.dequeue()
             if current_vertex not in visited:
+                answer += " " + str(current_vertex)
                 visited.add(current_vertex)
                 neighbors = self.getNeighbors(current_vertex)
                 if neighbors and len(neighbors):
                     for neighbor in neighbors:
                         q.enqueue(neighbor)
-        answer = " ".join(map( lambda x: str(x) , visited))
         print(answer)
 
     def dft(self, starting_vertex):
@@ -58,7 +59,23 @@ class Graph:
         Print each vertex in depth-first order
         beginning from starting_vertex.
         """
-        pass  # TODO
+        if starting_vertex not in self.vertices:
+            raise VertexNotFound("Sorry, the vertex doesn't exist")
+        visited = set()
+        answer = ""
+        st = Stack()
+        st.push(starting_vertex)
+        while st.size():
+            current_vertex = st.pop()
+            if current_vertex not in visited:
+                answer += " " + str(current_vertex)
+                visited.add(current_vertex)
+                neighbors = self.getNeighbors(current_vertex)
+                if neighbors and len(neighbors):
+                    for neighbor in neighbors:
+                        st.push(neighbor)
+        print(answer)
+
     def dft_recursive(self, starting_vertex):
         """
         Print each vertex in depth-first order
