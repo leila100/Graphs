@@ -52,7 +52,7 @@ class Graph:
                 if neighbors and len(neighbors):
                     for neighbor in neighbors:
                         q.enqueue(neighbor)
-        print(answer)
+        print("BFT: " + answer)
 
     def dft(self, starting_vertex):
         """
@@ -74,7 +74,7 @@ class Graph:
                 if neighbors and len(neighbors):
                     for neighbor in neighbors:
                         st.push(neighbor)
-        print(answer)
+        print("DFT: " + answer)
 
     def dft_recursive(self, starting_vertex):
         """
@@ -82,7 +82,22 @@ class Graph:
         beginning from starting_vertex.
         This should be done using recursion.
         """
-        pass  # TODO
+        if starting_vertex not in self.vertices:
+            raise VertexNotFound("Sorry, the vertex doesn't exist")
+        result = []
+        visited = set()
+        def dft(vertex, visited, answer):
+            if vertex not in visited:
+                visited.add(vertex)
+                answer.append(str(vertex))
+                neighbors = self.getNeighbors(vertex)
+                if neighbors and len(neighbors) > 0:
+                    for neighbor in neighbors:
+                        dft(neighbor, visited, answer)
+
+        dft(starting_vertex, visited, result)
+        print("Recursive DFT: " + " ".join(result))
+
     def bfs(self, starting_vertex, destination_vertex):
         """
         Return a list containing the shortest path from
@@ -138,6 +153,7 @@ if __name__ == '__main__':
         1, 2, 4, 6, 3, 5, 7
     '''
     graph.dft(1)
+    # graph.dft(11)
 
     '''
     Valid BFT paths:
@@ -165,6 +181,7 @@ if __name__ == '__main__':
         1, 2, 4, 6, 3, 5, 7
     '''
     graph.dft_recursive(1)
+    # graph.dft_recursive(15)
 
     '''
     Valid BFS path:
