@@ -13,11 +13,13 @@ class Graph:
     """Represent a graph as a dictionary of vertices mapping labels to edges."""
     def __init__(self):
         self.vertices = {}
+
     def add_vertex(self, vertex):
         """
         Add a vertex to the graph.
         """
         self.vertices[vertex] = set()
+
     def add_edge(self, v1, v2):
         """
         Add a directed edge to the graph.
@@ -25,12 +27,30 @@ class Graph:
         if v1 not in self.vertices or v2 not in self.vertices:
             raise VertexNotFound("Sorry, the vertex doesn't exist")
         self.vertices[v1].add(v2)
+
+    def getNeighbors(self, vertex):
+        if vertex in self.vertices:
+            return self.vertices[vertex]
+
     def bft(self, starting_vertex):
         """
         Print each vertex in breadth-first order
         beginning from starting_vertex.
         """
-        pass  # TODO
+        visited = set()
+        q = Queue()
+        q.enqueue(starting_vertex)
+        while q.size():
+            current_vertex = q.dequeue()
+            if current_vertex not in visited:
+                visited.add(current_vertex)
+                neighbors = self.getNeighbors(current_vertex)
+                if neighbors and len(neighbors):
+                    for neighbor in neighbors:
+                        q.enqueue(neighbor)
+        answer = " ".join(map( lambda x: str(x) , visited))
+        print(answer)
+
     def dft(self, starting_vertex):
         """
         Print each vertex in depth-first order
