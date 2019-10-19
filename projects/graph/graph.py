@@ -132,23 +132,24 @@ class Graph:
         starting_vertex to destination_vertex in
         depth-first order.
         """
-        if starting_vertex not in self.vertices or destination_vertex not in self.vertices:
-            raise VertexNotFound("Sorry, the vertex doesn't exist")
+        stack = Stack()
         visited = set()
-        answer = []
-        st = Stack()
-        st.push(starting_vertex)
-        while st.size():
-            current_vertex = st.pop()
-            if current_vertex not in visited:
-                answer.append(current_vertex)
-                visited.add(current_vertex)
-                if current_vertex == destination_vertex:
-                    return answer
-                neighbors = self.getNeighbors(current_vertex)
-                if neighbors and len(neighbors):
-                    for neighbor in neighbors:
-                        st.push(neighbor)
+        stack.push([starting_vertex])
+        while stack.size() > 0:
+            path = stack.pop()
+            current_vertex = path[-1]
+
+            if current_vertex == destination_vertex:
+                return path
+            
+            neighbors = self.getNeighbors(current_vertex)
+            for neighbor in neighbors:
+                if neighbor not in visited:
+                    visited.add(neighbor)
+                    current_path = path[:]
+                    current_path.append(neighbor)
+                    stack.push(current_path)
+        return []
         
 
 
