@@ -100,26 +100,6 @@ class Graph:
         dft(starting_vertex, visited, result)
         print("Recursive DFT: " + " ".join(result))
         return result
-    
-    """
-    Finds all the shortest path from starting_vertex to destination_vertex
-    If destination_vertex not provided, finds all the shortest paths from starting_vertex to every other vertex
-    """
-    def findShortestPath(self, starting_vertex, destination_vertex=None):
-        shortestPaths = {}
-        queue = Queue()
-        shortestPaths[starting_vertex] = [starting_vertex]
-        queue.enqueue(starting_vertex)
-        while queue.size():
-            current_vertex=queue.dequeue()
-            neighbors = self.getNeighbors(current_vertex)
-            for neighbor in neighbors:
-                if neighbor not in shortestPaths:
-                    shortestPaths[neighbor] = shortestPaths[current_vertex][:]
-                    shortestPaths[neighbor].append(neighbor)
-                    if destination_vertex is not None and neighbor == destination_vertex:
-                        return shortestPaths[neighbor]
-                    queue.enqueue(neighbor)
 
     def bfs(self, starting_vertex, destination_vertex):
         """
@@ -127,8 +107,24 @@ class Graph:
         starting_vertex to destination_vertex in
         breath-first order.
         """
-        path = self.findShortestPath(starting_vertex, destination_vertex)
-        return path
+        queue = Queue()
+        visited = set()
+        queue.enqueue([starting_vertex])
+        while queue.size() > 0:
+            path = queue.dequeue()
+            current_vertex = path[-1]
+
+            if current_vertex == destination_vertex:
+                return path
+            
+            neighbors = self.getNeighbors(current_vertex)
+            for neighbor in neighbors:
+                if neighbor not in visited:
+                    visited.add(neighbor)
+                    current_path = path[:]
+                    current_path.append(neighbor)
+                    queue.enqueue(current_path)
+        return []
 
     def dfs(self, starting_vertex, destination_vertex):
         """
