@@ -79,6 +79,6 @@ def earliest_ancestor(ancestors, starting_node):
 
 
 
-ancestors = [(1, 3), (2, 3), (3, 6), (5, 6), (5, 7), (4, 5), (4, 8), (8, 9), (11, 8), (10, 1)]
-ancestor = earliest_ancestor(ancestors, 3)
+ancestors = [(1, 5), (2, 5), (3, 6), (5, 6), (3, 7), (4, 3), (4, 8), (8, 9), (11, 8), (10, 1)]
+ancestor = earliest_ancestor(ancestors, 6)
 print(ancestor)

@@ -1,4 +1,4 @@
-
+import random
 
 class User:
     def __init__(self, name):
@@ -44,11 +44,27 @@ class SocialGraph:
         self.lastID = 0
         self.users = {}
         self.friendships = {}
-        # !!!! IMPLEMENT ME
 
         # Add users
+        for user in range(numUsers):
+            self.addUser(user)
 
         # Create friendships
+        num_friendships = numUsers * avgFriendships
+        num_function_calls = num_friendships // 2 # because each frienship is bidirectional, so we only call the function half of the time
+        # get the random friendships
+        # Find all the combinations of friendships pairs
+        friendships = []
+        for user in range(1, numUsers+1):
+            for friend in range(user+1, numUsers+1):
+                friendships.append((user, friend))
+
+        # Shuffle the list of frienships
+        random.shuffle(friendships)
+
+        # Take the first num_function_calls pairs 
+        for friendship in friendships[:num_function_calls]:
+            self.addFriendship(friendship[0], friendship[1])
 
     def getAllSocialPaths(self, userID):
         """
@@ -68,5 +84,5 @@ if __name__ == '__main__':
     sg = SocialGraph()
     sg.populateGraph(10, 2)
     print(sg.friendships)
-    connections = sg.getAllSocialPaths(1)
-    print(connections)
+    # connections = sg.getAllSocialPaths(1)
+    # print(connections)

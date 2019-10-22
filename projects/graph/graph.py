@@ -116,11 +116,11 @@ class Graph:
 
             if current_vertex == destination_vertex:
                 return path
-            
-            neighbors = self.getNeighbors(current_vertex)
-            for neighbor in neighbors:
-                if neighbor not in visited:
-                    visited.add(neighbor)
+
+            if current_vertex not in visited:
+                visited.add(current_vertex)
+                neighbors = self.getNeighbors(current_vertex)
+                for neighbor in neighbors:
                     current_path = path[:]
                     current_path.append(neighbor)
                     queue.enqueue(current_path)
@@ -141,11 +141,11 @@ class Graph:
 
             if current_vertex == destination_vertex:
                 return path
-            
-            neighbors = self.getNeighbors(current_vertex)
-            for neighbor in neighbors:
-                if neighbor not in visited:
-                    visited.add(neighbor)
+
+            if current_vertex not in visited:
+                visited.add(current_vertex)
+                neighbors = self.getNeighbors(current_vertex)
+                for neighbor in neighbors:
                     current_path = path[:]
                     current_path.append(neighbor)
                     stack.push(current_path)
