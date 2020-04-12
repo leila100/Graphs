@@ -1,4 +1,17 @@
+import random
 
+class Queue():
+    def __init__(self):
+        self.queue = []
+    def enqueue(self, value):
+        self.queue.append(value)
+    def dequeue(self):
+        if self.size() > 0:
+            return self.queue.pop(0)
+        else:
+            return None
+    def size(self):
+        return len(self.queue)
 
 class User:
     def __init__(self, name):
@@ -44,11 +57,27 @@ class SocialGraph:
         self.lastID = 0
         self.users = {}
         self.friendships = {}
-        # !!!! IMPLEMENT ME
 
         # Add users
+        for user in range(numUsers):
+            self.addUser(user)
 
         # Create friendships
+        num_friendships = numUsers * avgFriendships
+        num_function_calls = num_friendships // 2 # because each frienship is bidirectional, so we only call the function half of the time
+        # get the random friendships
+        # Find all the combinations of friendships pairs
+        friendships = []
+        for user in range(1, numUsers+1):
+            for friend in range(user+1, numUsers+1):
+                friendships.append((user, friend))
+
+        # Shuffle the list of frienships
+        random.shuffle(friendships)
+
+        # Take the first num_function_calls pairs 
+        for friendship in friendships[:num_function_calls]:
+            self.addFriendship(friendship[0], friendship[1])
 
     def getAllSocialPaths(self, userID):
         """
@@ -60,7 +89,17 @@ class SocialGraph:
         The key is the friend's ID and the value is the path.
         """
         visited = {}  # Note that this is a dictionary, not a set
-        # !!!! IMPLEMENT ME
+        queue = Queue()
+        visited[userID] = [userID]
+        queue.enqueue(userID)
+        while queue.size():
+            current_friend=queue.dequeue()
+            friends = self.friendships[current_friend]
+            for friend in friends:
+                if friend not in visited:
+                    visited[friend] = visited[current_friend][:]
+                    visited[friend].append(friend)
+                    queue.enqueue(friend)
         return visited
 
 
